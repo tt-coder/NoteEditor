@@ -2,9 +2,26 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Sample</title>
+  <link href="./main.css" rel="stylesheet">
+  <script src="./table.js"></script>
+  <title>Note Editor</title>
 </head>
 <body>
-  <p>Hello World</p>
+  
+  <input type="button" value="行追加" onclick="insertRow('note_table')" />
+  <table id="note_table">
+    <tr>
+      <td nowrap>0</td>
+      <td nowrap>1</td>
+      <td nowrap>2</td>
+      <td nowrap>3</td>
+      <td nowrap>4</td>
+      <td nowrap>5</td>
+      <td nowrap>6</td>
+      <td nowrap>7</td>
+      <td nowrap>8</td>
+    </tr>
+  </table>
+
 </body>
 </html>
