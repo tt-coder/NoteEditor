@@ -47,25 +47,47 @@ var table = new Handsontable(grid, {
   yellowRenderer
 });
 
-table.alter("remove_row",0,1);
+var mergeArray = []; // 結合のデータ用配列
+var barCount = 1;
 
+// 小節追加
 document.getElementById("add").addEventListener("click",function(){
   var rows = table.countRows();
-  var inst = table.getInstance();
-  var merge = {row: rows, col: 0, rowspan: 8, colspan: 1};
-  table.alter("insert_row",rows,8);
-  table.mergeCells = new Handsontable.MergeCells([merge]);
+  var divide = parseInt(document.getElementById("divide").value);
+  var newMerge = {row: rows, col: 0, rowspan: divide, colspan: 1};
+  table.alter("insert_row", rows, divide); // 行追加
+  // 結合
+  mergeArray.push(newMerge); // 配列に新しい結合を追加
+  table.mergeCells = new Handsontable.MergeCells(mergeArray);
+  var newRows = table.countRows();
+  table.render();
+  // 小節番号
+  table.setDataAtCell(rows, 0, barCount.toString());
+  barCount++;
+  // BPMと拍子
+  var BPM = document.getElementById("bpm").value;
+  var time = document.getElementById("time").value;
+  table.setDataAtCell(rows, 1, BPM + " , " + time);
+});
+
+// 1行目削除
+document.getElementById("remove").addEventListener("click",function(){
+  table.alter("remove_row",0);
   table.render();
 });
 
+// セル選択時の処理
 Handsontable.hooks.add("afterSelection", function(){
   var selected = table.getSelected();
   var inst = table.getInstance();
   var cellProperties = table.getCellMeta(selected[2],selected[3]);
-  Mousetrap.bind('1', function(e) {
-    cellProperties.renderer = yellowRenderer;
-    table.render();
-  });
-  //cellProperties.renderer = yellowRenderer;
+  // laneのエリア内なら
+  if(1 < selected[3] && selected[3] < 11){
+    // ショートカットキーで色付け
+    Mousetrap.bind('1', function(e) {
+      cellProperties.renderer = yellowRenderer;
+      table.render();
+    });
+  }
   console.log("(" + selected[2] + " , " + selected[3] + ")");
 });
