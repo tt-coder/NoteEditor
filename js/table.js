@@ -96,8 +96,10 @@ document.getElementById("add").addEventListener("click",function(){
   table.alter("insert_row",maxRow-1, divide);
   // 結合
   mergeArray.push(newMerge);
+  /*
   table.mergeCells = new Handsontable.MergeCells(mergeArray);
   table.render();
+  */
   // 小節番号
   table.setDataAtCell(maxRow-1, 0, barCount.toString());
   barCount++;
@@ -112,10 +114,11 @@ document.getElementById("add").addEventListener("click",function(){
   var newBorderBottom = {range: {from: {row: newMaxRow-1, col: 3}, to: {row: newMaxRow-1, col: 11}}, top: {width: 3, color: "red"}};
   borderArray.push(newBorderTop);
   borderArray.push(newBorderBottom);
-  var customBorder = {
-    customBorders: borderArray
+  var updateArray = {
+    customBorders: borderArray,
+    mergeCells: mergeArray
   };
-  table.updateSettings(customBorder);
+  table.updateSettings(updateArray);
   table.runHooks('afterInit');
 });
 

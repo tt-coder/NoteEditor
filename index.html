@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>NoteEditor</title>
     <link rel="stylesheet" href="css/handsontable.full.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <!--<script src="js/jquery.min.js"></script>-->
   </head>
   <body>
-    <button id="add">ADD</button>
-    <button id="remove">Remove</button>
-    BPM
-    <input id="bpm" value="180"></input>
-    拍子
-    <input id="time" value="4/4"></input>
-    分割数
-    <input id="divide" value="4"></input>
-    <button id="save">保存</button>
-    <div id="grid">
+    <div class="main">
+      <div id ="settings">
+        <button id="add">ADD</button>
+        <button id="remove">Remove</button>
+        BPM
+        <input id="bpm" value="180"></input>
+        拍子
+        <input id="time" value="4/4"></input>
+        分割数
+        <input id="divide" value="4"></input>
+        <button id="save">保存</button>
+      </div>
+      <div id="grid"></div>
     </div>
 
     <script src="js/handsontable.full.min.js"></script>
-    <script src="js/table.js"></script>
     <script src="js/mousetrap.min.js"></script>
+    <script src="js/table.js"></script>
   </body>
 </html>
