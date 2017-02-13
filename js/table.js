@@ -250,17 +250,17 @@ Handsontable.hooks.add("afterSelection", function(){
       var cellProperties = table.getCellMeta(startRow,startCol);
       cellProperties.renderer = decideColor(1);
       table.render();
-      //countColorCell();
+      countColorCell();
     });
     Mousetrap.bind('2', function(e) { // ロング
       colorCellVertical(4);
-      //countColorCell();
+      countColorCell();
     });
     Mousetrap.bind('backspace', function(e) { // 削除
       var cellProperties = table.getCellMeta(startRow,startCol);
       cellProperties.renderer = decideColor(5);
       table.render();
-      //countColorCell();
+      countColorCell();
     });
   }
 });
