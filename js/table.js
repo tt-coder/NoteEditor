@@ -79,11 +79,12 @@ var table = new Handsontable(grid, {
   minSpareRows: 1,
   contextMenu: true,
   enterBeginsEditing: false,
-  mergeCells: [],
-  yellowRenderer
+  mergeCells: true,
+  customBorders: true
 });
 
 var mergeArray = []; // 結合のデータ用配列
+var borderArray = [];
 var barCount = 1;
 var rowNoteCount = [];
 // 小節追加
@@ -105,6 +106,17 @@ document.getElementById("add").addEventListener("click",function(){
   var time = document.getElementById("time").value;
   table.setDataAtCell(maxRow-1, 1, BPM);
   table.setDataAtCell(maxRow-1, 2, time);
+  // 小節線
+  var newMaxRow = table.countRows();
+  var newBorderTop = {range: {from: {row: maxRow-1, col: 3}, to: {row: maxRow-1, col: 11}}, top: {width: 3, color: "red"}};
+  var newBorderBottom = {range: {from: {row: newMaxRow-1, col: 3}, to: {row: newMaxRow-1, col: 11}}, top: {width: 3, color: "red"}};
+  borderArray.push(newBorderTop);
+  borderArray.push(newBorderBottom);
+  var customBorder = {
+    customBorders: borderArray
+  };
+  table.updateSettings(customBorder);
+  table.runHooks('afterInit');
 });
 
 // 1行目削除
@@ -112,7 +124,6 @@ document.getElementById("remove").addEventListener("click",function(){
   table.alter("remove_row",0);
   table.render();
 });
-
 
 // セル選択時の処理
 Handsontable.hooks.add("afterSelection", function(){
@@ -248,48 +259,8 @@ Handsontable.hooks.add("afterSelection", function(){
       countColorCell();
     });
   }
-  /*
-  var nowCount = 0;
-  for(var j=3;j<=11;j++){
-    var cellProperties = table.getCellMeta(0,j);
-    if(cellProperties.renderer == yellowRenderer){
-      nowCount++;
-    }
-  }
-  table.setDataAtCell(0, 12, nowCount.toString());
-  nowCount = 0;
-  */
-  /*
-  var maxRows = table.countRows();
-  var selected = table.getSelected();
-  var rows = selected[2];
-  var columns = selected[3];
-  console.log(selected);
-  if(isNaN(rowNoteCount[rows])){
-    rowNoteCount[rows] = 0;
-  }
-  //var inst = table.getInstance();
-  var cellProperties = table.getCellMeta(rows,columns);
-  // laneのエリア内なら
-  if(1 < selected[3] && selected[3] < 11 && rows != maxRows-1){
-    // ショートカットキーで色付け
-    Mousetrap.bind('1', function(e) {
-      cellProperties.renderer = yellowRenderer;
-      rowNoteCount[rows]++;
-      //console.log(rowNoteCount[rows]);
-      if(rows != 0){
-        var nowCount = rowNoteCount[rows]+rowNoteCount[rows-1];
-      }else if(rows == 0){
-        var nowCount = rowNoteCount[rows];
-      }
-      //table.setDataAtCell(rows, 11, nowCount.toString());
-      table.render();
-    });
-  }
-  //console.log("(" + selected[2] + " , " + selected[3] + ")");
-  */
 });
 
-document.getElementById("debug").addEventListener("click",function(){
+document.getElementById("save").addEventListener("click",function(){
 
 });
