@@ -74,6 +74,7 @@ var table = new Handsontable(grid, {
     }
     return cellProperties;
   },
+  viewportColumnRenderingOffset: 100,
   colWidths: [50,50,50,50,50,50,50,50,50,50,50,50,60,80],
   colHeaders:["小節","BPM","拍子","lane0","lane1","lane2","lane3","lane4","lane5","lane6","lane7","lane8","Count","同時押し"],
   minSpareRows: 1,
@@ -107,7 +108,7 @@ document.getElementById("add").addEventListener("click",function(){
   var BPM = document.getElementById("bpm").value;
   var time = document.getElementById("time").value;
   table.setDataAtCell(maxRow-1, 1, BPM);
-  table.setDataAtCell(maxRow-1, 2, time);
+  table.setDataAtCell(maxRow-1, 2, time)
   // 小節線
   var newMaxRow = table.countRows();
   var newBorderTop = {range: {from: {row: maxRow-1, col: 3}, to: {row: maxRow-1, col: 11}}, top: {width: 3, color: "red"}};
@@ -249,17 +250,17 @@ Handsontable.hooks.add("afterSelection", function(){
       var cellProperties = table.getCellMeta(startRow,startCol);
       cellProperties.renderer = decideColor(1);
       table.render();
-      countColorCell();
+      //countColorCell();
     });
     Mousetrap.bind('2', function(e) { // ロング
       colorCellVertical(4);
-      countColorCell();
+      //countColorCell();
     });
     Mousetrap.bind('backspace', function(e) { // 削除
       var cellProperties = table.getCellMeta(startRow,startCol);
       cellProperties.renderer = decideColor(5);
       table.render();
-      countColorCell();
+      //countColorCell();
     });
   }
 });
